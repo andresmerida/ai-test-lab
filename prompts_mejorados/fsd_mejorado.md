@@ -128,11 +128,19 @@ Feature: Registro de pedido por el consumidor
     And el item "INF-203 Pizza Fugazzeta" tiene stock disponible de "5" unidades
     When el Consumidor confirma la orden con direccion "Av. Las Heroínas 456" y metodo de pago "tarjeta-visa"
     Then el sistema genera una orden con ID unico en estado "PENDING_PAYMENT"
-    And devuelve el subtotal de "120.00" BOB e impuestos de "15.60" BOB
+    And devuelve el subtotal of "120.00" BOB e impuestos de "15.60" BOB
 ```
 
 ... [Repetir la estructura exacta para UC-02, UC-03, UC-04, UC-05]
 ```
+
+### 1.7 Verification (Criterios de Verificación Funcional)
+
+Para garantizar la precisión funcional de la especificación generada, el modelo debe validar que:
+- **Estructura Gherkin Certificable**: Cada escenario Gherkin cuente con precondiciones claras (`Dado`), una acción ejecutable (`Cuando`) y resultados observables (`Entonces`). No se deben mezclar múltiples acciones complejas en un solo paso.
+- **Aislamiento Funcional**: Cada Caso de Uso (UC) represente una transacción funcional atómica y no contenga lógica de control interna del framework de backend.
+- **Consistencia de Actores**: El actor del Caso de Uso coincida exactamente con los actores definidos en los stakeholders del PRD (Consumidor, Restaurante, Courier, Empleado).
+- **Mapeo de Flujos de Fallo**: Por cada flujo principal, existan al menos 2 flujos alternativos o de excepción detallando la respuesta de error del sistema (p. ej. denegación de cobro en Stripe o dirección de entrega fuera de cobertura).
 
 ---
 
@@ -198,12 +206,12 @@ Toda salida funcional debe cumplir estrictamente las siguientes invariantes:
 
 ---
 
-## 8. Versionado
+## 8. Changelog
 
-| Versión | Fecha | Autor | Cambio | Modelo validado |
-|---------|-------|-------|--------|------------------|
-| `v0.1-seed` | 01/05/2026 | Arquitecto del Lab | Estructura básica del seed. | Claude Sonnet |
-| `v1.0-mejorada` | 24/05/2026 | Antigravity AI / Andres Merida | **Mejora Completa**: Reestructuración total a 9 secciones según `PROMPT.md`, resolución de los 4 huecos TODO (listado atómico de UCs, regla de granularidad, criterio cuantitativo riguroso, y esqueleto detallado con ejemplos), e integración de trazabilidad de tests de QA en `docs/prompts/SKILL.md`. | Gemini 3.5 Pro & Flash |
+| Fecha | Autor | Resumen de los cambios comparando con la versión anterior del prompt |
+|---|---|---|
+| `01/05/2026` | Arquitecto del Lab | Creación de la versión inicial (`v0.1-seed`) con los TODOs de Casos de Uso mínimos y reglas de granularidad vacías. |
+| `24/05/2026` | Antigravity AI & Andres Merida | **v1.0-mejorada / v0**: Reestructuración completa a 9 secciones según `PROMPT.md`, resolución de TODOs especificando detalladamente los 5 UCs de FTGO, establecimiento de la regla de granularidad funcional, integración de la precondición con fixtures realistas de QA, adición de la sección `### 1.7 Verification` y normalización de la tabla Changelog de versión. |
 
 ---
 

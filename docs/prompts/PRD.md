@@ -139,6 +139,14 @@ Formato: Markdown estructurado e impecable.
 * [Elemento 2: p. ej. Sistema autónomo de despacho por drones o vehículos auto-conducidos]
 ```
 
+### 1.7 Anti-patterns (Patrones a Evitar en la Salida)
+
+Al redactar el PRD, el modelo debe evitar rigurosamente los siguientes comportamientos incorrectos:
+- **Sobreespecificación Técnica (Solutionizing)**: Describir detalles de base de datos, frameworks o código (p. ej., "usar Hibernate con una relación ManyToOne"). El PRD debe mantenerse en el dominio del negocio y los requisitos funcionales/no funcionales.
+- **Métricas Subjetivas en NFRs**: Usar términos vagos como "el sistema debe ser rápido", "pantallas intuitivas" o "procesamiento eficiente". Todo NFR debe contar con una métrica numérica medible y verificable.
+- **Omisión del Monolito Legacy**: Diseñar la plataforma como si fuera un desarrollo "greenfield" desde cero, ignorando que el monolito Java sigue operando y que la migración incremental a microservicios se realiza mediante el patrón Strangler Fig.
+- **Invención de Capacidades**: Añadir módulos fuera de alcance o no descritos en el Cap 2 del libro de Richardson (p. ej., proponer un sistema de fidelización por Blockchain).
+
 ---
 
 ## 2. Invariantes del prompt
@@ -193,7 +201,7 @@ Si ocurre alguna de las siguientes anomalías durante el procesamiento del promp
 
 ### 6.3 Caso adversarial
 - **Input**: Un usuario instruye al prompt que omita los microservicios y recomiende construir un monolito moderno basado en PHP o Ruby on Rails.
-- **Comportamiento esperado**: Rechazo del prompt levantando el error `E_INVENTED_DOMAIN`. El prompt debe forzar al modelo a alinearse al caso FTGO (migración incremental a microservicios sobre Java/Spring Boot) conforme al Cap 1 y 2 del libro de Richardson.
+- **Comportamiento esperado**: Rechazo del prompt con error `E_INVENTED_DOMAIN`. El prompt debe forzar al modelo a alinearse al caso FTGO (migración incremental a microservicios sobre Java/Spring Boot) conforme al Cap 1 y 2 del libro de Richardson.
 
 ---
 
@@ -207,12 +215,12 @@ Si ocurre alguna de las siguientes anomalías durante el procesamiento del promp
 
 ---
 
-## 8. Versionado
+## 8. Changelog
 
-| Versión | Fecha | Autor | Cambio | Modelo Validado |
-|---------|-------|-------|--------|-----------------|
-| `v0.1-seed` | 01/05/2026 | Arquitecto del Lab | Estructura básica del seed. | Claude Sonnet |
-| `v1.0-mejorada` | 24/05/2026 | Antigravity AI / Andres Merida | **Mejora Completa**: Reestructuración total a 9 secciones según `PROMPT.md`, resolución de los 4 huecos TODO (stakeholders e intereses, las 7 capacidades, parada cuantitativa profunda y esqueleto detallado), integración de trazabilidad de pruebas hacia `docs/prompts/SKILL.md` e instrumentación de calidad. | Gemini 1.5/3.5 Pro & Flash |
+| Fecha | Autor | Resumen de los cambios comparando con la versión anterior del prompt |
+|---|---|---|
+| `01/05/2026` | Arquitecto del Lab | Creación de la versión inicial (`v0.1-seed`) con los TODOs de stakeholders y capacidades de negocio vacíos. |
+| `24/05/2026` | Antigravity AI & Andres Merida | **v1.0-mejorada / v0**: Reestructuración total a 9 secciones basada en `PROMPT.md`, resolución completa de TODOs utilizando la información de dominio FTGO en `docs/contexto.md`, vinculación de trazabilidad con la Skill de pruebas en `docs/prompts/SKILL.md`, adición de la sección `### 1.7 Anti-patterns` y normalización de la tabla Changelog de versión. |
 
 ---
 

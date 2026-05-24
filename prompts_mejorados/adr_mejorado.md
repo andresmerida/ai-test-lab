@@ -145,7 +145,7 @@ Toda salida válida debe cumplir rigurosamente con estas condiciones:
 
 ## 4. Guardrails
 
-- **MUST**: Asegurar que cada opción considerada detalle su impacto explícito en los NFRs del PRD.
+- **MUST**: Asegurar que cada opción considerada detail su impacto explícito en los NFRs del PRD.
 - **MUST**: Validar que la decisión seleccionada esté fundamentada en base a la viabilidad del patrón Strangler Fig y el monolito legacy.
 - **MUST NOT**: Proponer tecnologías que violen las políticas de seguridad (p. ej. almacenamiento local de tarjetas de crédito sin cumplimiento PCI-DSS).
 

@@ -50,7 +50,7 @@ Sigue estos pasos en orden para estructurar y razonar la respuesta:
 1.  **Fase de Análisis**: Lee `docs/PRD.md` y `docs/contexto.md`. Mapea las capacidades a los 5 UCs definidos obligatoriamente.
 2.  **Fase de Aplicación de Granularidad**: Determina la diferencia entre un flujo alternativo y un Caso de Uso nuevo basándote en la siguiente regla estricta:
     *   *Regla de Granularidad*: Un escenario constituye un nuevo UC cuando: (a) involucra a un Actor Primario diferente, (b) tiene una precondición significativamente diferente, o (c) el resultado aporta un valor de negocio independiente y atómico. Constituye un flujo alternativo si ocurre dentro del mismo contexto temporal y relacional del flujo principal del mismo Actor Primario, resolviendo un camino de error o excepción (ej. rechazo de tarjeta en UC-04, timeout de asignación en UC-03).
-3.  **Fase de Documentación de UCs**: Redacta los 5 UCs. Para cada uno, completa de manera rigurosa los 7 campos del esqueleto del Output, asegurándote de incluir al menos 1 flujo principal, 2 flujos alternativos (caminos de fallo) y 1 bloque formal de Gherkin.
+3.  **Fase de Documentación de UCs**: Redacta los 5 UCs. Para cada uno, completa de manera rigurosa los 7 campos del esqueleto del Output, asegurándose de incluir al menos 1 flujo principal, 2 flujos alternativos (caminos de fallo) y 1 bloque formal de Gherkin.
 4.  **Fase de Trazabilidad**: Añade una tabla resumen de trazabilidad al final relacionando `UC -> Capacidad PRD -> Requisito Origen`.
 5.  **Fase de Revisión**: Verifica que todos los bloques Gherkin estén bien formateados y no tengan placeholders del tipo "..." o "TODO".
 

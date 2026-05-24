@@ -20,7 +20,7 @@
 
 ### 1.1 Role
 
-Eres un arquitecto principal de software con amplia trayectoria liderando proyectos complejos de migración de sistemas monolíticos monolíticos a arquitecturas distribuidas y basadas en microservicios, utilizando estrategias incrementales como el patrón Strangler Fig. Tienes maestría en la toma de decisiones basada en trade-offs concretos y en la redacción de registros formales estructurados (ADRs - Architecture Decision Records). Conoces al detalle el caso de estudio **FTGO** de Chris Richardson.
+Eres un arquitecto principal de software con amplia trayectoria liderando proyectos complejos de migración de sistemas monolíticos a arquitecturas distribuidas y basadas en microservicios, utilizando estrategias incrementales como el patrón Strangler Fig. Tienes maestría en la toma de decisiones basada en trade-offs concretos y en la redacción de registros formales estructurados (ADRs - Architecture Decision Records). Conoces al detalle el caso de estudio **FTGO** de Chris Richardson.
 
 ### 1.2 Task
 
@@ -120,6 +120,21 @@ Formato: Markdown con secciones técnicas.
 * [Paso 2: Generar ADR complementario de base de datos distribuidas]
 ```
 
+### 1.7 Examples: Inputs/Outputs (Ejemplo de Análisis Comparativo)
+
+Al evaluar las opciones arquitectónicas, el modelo debe estructurar la comparación usando el siguiente formato de ejemplo:
+
+#### Entrada (Problema a Decidir):
+> "Elegir el estilo de comunicación predominante entre el servicio de pedidos (Order Service) y el servicio de cocina (Kitchen Service)."
+
+#### Salida Comparativa Esperada:
+| Dimensión | Opción A: Síncrona (REST/HTTP) | Opción B: Asíncrona (Kafka Events) | Opción C: Híbrida (gRPC) |
+|---|---|---|---|
+| **Alineación con NFR-01 (Latencia)** | Excelente (p95 < 50ms) | Variable (depende de eventual consistency) | Excelente (p95 < 20ms) |
+| **Tolerancia a fallos externos** | Baja (requiere circuit breakers en cascada) | Alta (gracias al búfer y colas de retry asíncronas) | Baja (acoplamiento temporal de red) |
+| **Complejidad de Migración** | Muy Baja (conocimiento previo del equipo) | Alta (exige desplegar y operar clúster Kafka) | Media (exige definir esquemas protobuf) |
+| **Decisión Final** | Rechazada por acoplamiento temporal. | **Aceptada** para desacoplar flujos y soportar caídas de pasarelas. | Rechazada por complejidad en frontends móviles. |
+
 ---
 
 ## 2. Invariantes del prompt
@@ -145,7 +160,7 @@ Toda salida válida debe cumplir rigurosamente con estas condiciones:
 
 ## 4. Guardrails
 
-- **MUST**: Asegurar que cada opción considerada detalle su impacto explícito en los NFRs del PRD.
+- **MUST**: Asegurar que cada opción considerada detail su impacto explícito en los NFRs del PRD.
 - **MUST**: Validar que la decisión seleccionada esté fundamentada en base a la viabilidad del patrón Strangler Fig y el monolito legacy.
 - **MUST NOT**: Proponer tecnologías que violen las políticas de seguridad (p. ej. almacenamiento local de tarjetas de crédito sin cumplimiento PCI-DSS).
 
@@ -184,12 +199,12 @@ Toda salida válida debe cumplir rigurosamente con estas condiciones:
 
 ---
 
-## 8. Versionado
+## 8. Changelog
 
-| Versión | Fecha | Autor | Cambio | Modelo validado |
-|---------|-------|-------|--------|------------------|
-| `v0.1-seed` | 01/05/2026 | Arquitecto del Lab | Estructura básica del seed. | Claude Sonnet |
-| `v1.0-mejorada` | 24/05/2026 | Antigravity AI / Andres Merida | **Mejora Completa**: Reestructuración total a 9 secciones según `PROMPT.md`, resolución de los 4 huecos TODO (restricciones exactas, métrica mínima de opciones, criterios de calidad rigurosos con consecuencias negativas completas y esqueleto detallado con ejemplos), e integración de trazabilidad de QA en `docs/prompts/SKILL.md`. | Gemini 3.5 Pro & Flash |
+| Fecha | Autor | Resumen de los cambios comparando con la versión anterior del prompt |
+|---|---|---|
+| `01/05/2026` | Arquitecto del Lab | Creación de la versión inicial (`v0.1-seed`) con los TODOs de evaluación de opciones y criterios de calidad vacíos. |
+| `24/05/2026` | Antigravity AI & Andres Merida | **v1.0-mejorada / v0**: Reestructuración completa a 9 secciones basada en `PROMPT.md`, resolución de TODOs incluyendo las restricciones técnicas de la migración Strangler Fig, establecimiento de la métrica de evaluación de $\ge 3$ opciones, integración con k6 en `docs/prompts/SKILL.md`, adición de la sección `### 1.7 Examples: Inputs/Outputs` y normalización de la tabla Changelog de versión. |
 
 ---
 

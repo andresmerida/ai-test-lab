@@ -9,7 +9,7 @@
 | Tipo de prompt | generación / estructuración |
 | Modelo recomendado | Sonnet / Opus / Gemini 3.5 Pro |
 | Temperatura | `0.2` |
-| Versión | `v1.0-mejorada` |
+| Versión | `v1.1-mejorada` |
 | Fecha | `24/05/2026` |
 | Autor(es) | Antigravity AI & Andres Merida |
 | Estado | Aprobado |
@@ -137,6 +137,25 @@ Formato: Markdown estructurado e impecable.
 ### 5.2 Fuera de Alcance (Out of Scope)
 * [Elemento 1: p. ej. Reescritura completa del módulo legacy de contabilidad interna (permanece en monolito)]
 * [Elemento 2: p. ej. Sistema autónomo de despacho por drones o vehículos auto-conducidos]
+
+---
+
+## Métricas
+
+> **Instrucción de llenado**: El modelo debe completar esta sección al final de cada ejecución del prompt, registrando el número de ejecución secuencial, el ID y versión del prompt, y los valores concretos de cada métrica con sus respectivos insights.
+
+**#️⃣ Ejecución**: `[N]`
+**🔖 Prompt**: `PR-PRD-FTGO-001` — versión `v1.1-mejorada`
+
+| Nombre de la métrica | Valor | Insights |
+|---|---|---|
+| **Completitud de secciones** (`sections_coverage`) | `[X/5 secciones]` | ¿Se generaron todas las secciones: Contexto, Stakeholders, Capacidades, NFRs, Alcance? Listar cualquier sección faltante. |
+| **Cobertura de capacidades** (`capabilities_coverage`) | `[X/7]` | ¿Se cubrieron las 7 capacidades del Cap. 2 de Richardson? Indicar cuáles faltan si el valor < 7. |
+| **Trazabilidad de NFRs** (`nfr_traceability_rate`) | `[X%]` | % de NFRs que citan su origen con formato `[Brief §A.X ...]`. Debe ser 100%. |
+| **NFRs con métrica cuantitativa** (`nfr_quantitative_rate`) | `[X%]` | % de NFRs que incluyen un valor numérico medible (ej. < 200 ms, 99.9%). Debe ser 100%. |
+| **Ausencia de placeholders vacíos** (`placeholder_free`) | `[Sí/No]` | ¿El documento contiene TODOs o `[...]` sin completar? "Sí" indica documento limpio. |
+| **Palabras totales del output** (`word_count`) | `[N palabras]` | Rango aceptable: 1500–3000 palabras. Indicar si está fuera de rango. |
+| **Referencia a SKILL.md** (`skill_link_present`) | `[Sí/No]` | ¿El PRD menciona explícitamente `docs/prompts/SKILL.md` al menos una vez? |
 ```
 
 ### 1.7 Anti-patterns (Patrones a Evitar en la Salida)
@@ -208,10 +227,14 @@ Si ocurre alguna de las siguientes anomalías durante el procesamiento del promp
 ## 7. Instrumentación
 
 - **Herramienta de Observabilidad**: OpenTelemetry / Langfuse.
-- **Métricas Clave de Calidad del Prompt**:
-  - `trazabilidad_nfr_rate`: Porcentaje de NFRs que contienen citación de origen válida en el brief ($\ge 100\%$).
-  - `capabilities_coverage`: Número de capacidades cubiertas sobre el total estipulado (7/7 obligatorias).
-  - `completeness_score`: Evaluación automática de presencia de las 5 secciones requeridas sin placeholders.
+- **Métricas Clave de Calidad del Prompt** (ver tabla `## Métricas` en el artefacto generado):
+  - `sections_coverage`: 5/5 secciones obligatorias presentes.
+  - `capabilities_coverage`: 7/7 capacidades de negocio cubiertas.
+  - `nfr_traceability_rate`: 100% de NFRs con citación `[Brief §A.X ...]`.
+  - `nfr_quantitative_rate`: 100% de NFRs con métrica numérica medible.
+  - `placeholder_free`: Sin TODOs ni `[...]` vacíos en la salida final.
+  - `word_count`: Dentro del rango 1500–3000 palabras.
+  - `skill_link_present`: Al menos una referencia explícita a `docs/prompts/SKILL.md`.
 
 ---
 
@@ -221,6 +244,7 @@ Si ocurre alguna de las siguientes anomalías durante el procesamiento del promp
 |---|---|---|
 | `01/05/2026` | Arquitecto del Lab | Creación de la versión inicial (`v0.1-seed`) con los TODOs de stakeholders y capacidades de negocio vacíos. |
 | `24/05/2026` | Antigravity AI & Andres Merida | **v1.0-mejorada / v0**: Reestructuración total a 9 secciones basada en `PROMPT.md`, resolución completa de TODOs utilizando la información de dominio FTGO en `docs/contexto.md`, vinculación de trazabilidad con la Skill de pruebas en `docs/prompts/SKILL.md`, adición de la sección `### 1.7 Anti-patterns` y normalización de la tabla Changelog de versión. |
+| `25/05/2026` | Antigravity AI & Andres Merida | **v1.1-mejorada**: Integración del bloque `## Métricas` en el esqueleto de salida del PRD con 7 métricas de calidad trazables (sections_coverage, capabilities_coverage, nfr_traceability_rate, nfr_quantitative_rate, placeholder_free, word_count, skill_link_present). Actualización de la sección `## 7. Instrumentación` para referenciar el artefacto generado. Bump de versión a `v1.1-mejorada`. |
 
 ---
 
@@ -229,3 +253,4 @@ Si ocurre alguna de las siguientes anomalías durante el procesamiento del promp
 | Revisor | Fecha | Veredicto | Notas |
 |---------|-------|-----------|-------|
 | Andres Merida | 24/05/2026 | Aprobado | El prompt cumple plenamente con los objetivos de normalización, detalle de dominio FTGO y trazabilidad extrema hacia el ciclo de automatización de QA. |
+| Andres Merida | 25/05/2026 | Aprobado | Integración del bloque `## Métricas` validada. Las 7 métricas cubren completitud, trazabilidad NFR, cobertura de capacidades y calidad del documento. |

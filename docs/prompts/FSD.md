@@ -9,7 +9,7 @@
 | Tipo de prompt | generación / transformación |
 | Modelo recomendado | Sonnet / Gemini 3.5 Pro |
 | Temperatura | `0.2` |
-| Versión | `v1.0-mejorada` |
+| Versión | `v1.1-mejorada` |
 | Fecha | `24/05/2026` |
 | Autor(es) | Antigravity AI & Andres Merida |
 | Estado | Aprobado |
@@ -132,6 +132,24 @@ Feature: Registro de pedido por el consumidor
 ```
 
 ... [Repetir la estructura exacta para UC-02, UC-03, UC-04, UC-05]
+
+---
+
+## Métricas
+
+> **Instrucción de llenado**: El modelo debe completar esta sección al final de cada ejecución del prompt, registrando el número de ejecución secuencial, el ID y versión del prompt, y los valores concretos de cada métrica con sus respectivos insights.
+
+**#️⃣ Ejecución**: `[N]`
+**🔖 Prompt**: `PR-FSD-FTGO-001` — versión `v1.1-mejorada`
+
+| Nombre de la métrica | Valor | Insights |
+|---|---|---|
+| **Completitud de Casos de Uso** (`uc_coverage`) | `[X/5 UCs]` | ¿Se documentaron los 5 UCs obligatorios (UC-01 al UC-05)? Indicar cuáles faltan. |
+| **Tasa de bloques Gherkin válidos** (`gherkin_syntax_pass_rate`) | `[X%]` | % de UCs con bloque Gherkin completo y parseable (Feature + Scenario + Given/When/Then). Debe ser 100%. |
+| **Flujos alternativos por UC** (`alt_flows_rate`) | `[X/5 UCs con ≥ 2 flujos alt.]` | ¿Cada UC documenta al menos 2 flujos alternativos o de excepción? |
+| **Trazabilidad UC→US/Capacidad** (`uc_traceability_rate`) | `[X%]` | % de UCs con referencia explícita a una User Story del brief o capacidad del PRD. Debe ser 100%. |
+| **Fixtures de datos realistas** (`realistic_fixtures`) | `[Sí/No]` | ¿Los datos de prueba Gherkin usan valores del dominio FTGO (moneda BOB, restaurantes, IDs)? |
+| **Ausencia de placeholders vacíos** (`placeholder_free`) | `[Sí/No]` | ¿El FSD contiene TODOs o marcadores `[...]` sin completar? "Sí" indica documento limpio. |
 ```
 
 ### 1.7 Verification (Criterios de Verificación Funcional)
@@ -200,9 +218,13 @@ Toda salida funcional debe cumplir estrictamente las siguientes invariantes:
 ## 7. Instrumentación
 
 - **Herramienta**: OpenTelemetry / Langsmith.
-- **Métricas**:
-  - `gherkin_syntax_pass_rate`: Porcentaje de bloques Gherkin que cumplen la sintaxis formal y son parseables por Cucumber/JUnit ($\ge 100\%$).
-  - `uc_coverage`: Número de UCs implementados vs el mínimo exigido (5/5).
+- **Métricas** (ver tabla `## Métricas` en el artefacto generado):
+  - `uc_coverage`: 5/5 UCs documentados y completos.
+  - `gherkin_syntax_pass_rate`: 100% de UCs con bloque Gherkin válido.
+  - `alt_flows_rate`: 5/5 UCs con al menos 2 flujos alternativos.
+  - `uc_traceability_rate`: 100% de UCs trazados a US del brief o capacidad del PRD.
+  - `realistic_fixtures`: Fixtures con datos realistas del dominio FTGO.
+  - `placeholder_free`: Sin TODOs ni marcadores `[...]` vacíos.
 
 ---
 
@@ -212,6 +234,7 @@ Toda salida funcional debe cumplir estrictamente las siguientes invariantes:
 |---|---|---|
 | `01/05/2026` | Arquitecto del Lab | Creación de la versión inicial (`v0.1-seed`) con los TODOs de Casos de Uso mínimos y reglas de granularidad vacías. |
 | `24/05/2026` | Antigravity AI & Andres Merida | **v1.0-mejorada / v0**: Reestructuración completa a 9 secciones según `PROMPT.md`, resolución de TODOs especificando detalladamente los 5 UCs de FTGO, establecimiento de la regla de granularidad funcional, integración de la precondición con fixtures realistas de QA, adición de la sección `### 1.7 Verification` y normalización de la tabla Changelog de versión. |
+| `25/05/2026` | Antigravity AI & Andres Merida | **v1.1-mejorada**: Integración del bloque `## Métricas` en el esqueleto de salida del FSD con 6 métricas de calidad (uc_coverage, gherkin_syntax_pass_rate, alt_flows_rate, uc_traceability_rate, realistic_fixtures, placeholder_free). Actualización de la sección `## 7. Instrumentación` para referenciar el artefacto generado. Bump de versión a `v1.1-mejorada`. |
 
 ---
 
@@ -220,3 +243,4 @@ Toda salida funcional debe cumplir estrictamente las siguientes invariantes:
 | Revisor | Fecha | Veredicto | Notas |
 |---------|-------|-----------|-------|
 | Andres Merida | 24/05/2026 | Aprobado | Estructura y granularidad excelentes, listo para alimentar la skill automática de QA. |
+| Andres Merida | 25/05/2026 | Aprobado | Integración del bloque `## Métricas` validada. Las 6 métricas cubren completitud funcional, calidad Gherkin, trazabilidad y calidad de fixtures. |

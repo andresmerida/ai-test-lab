@@ -9,7 +9,7 @@
 | Tipo de prompt | generación / transformación / análisis de trade-offs |
 | Modelo recomendado | Opus / Gemini 3.5 Pro |
 | Temperatura | `0.3` |
-| Versión | `v1.0-mejorada` |
+| Versión | `v1.1-mejorada` |
 | Fecha | `24/05/2026` |
 | Autor(es) | Antigravity AI & Andres Merida |
 | Estado | Aprobado |
@@ -118,6 +118,24 @@ Formato: Markdown con secciones técnicas.
 ## 6. Siguientes Pasos (Follow-ups)
 * [Paso 1: Desarrollar una POC local para validar tiempos de red]
 * [Paso 2: Generar ADR complementario de base de datos distribuidas]
+
+---
+
+## Métricas
+
+> **Instrucción de llenado**: El modelo debe completar esta sección al final de cada ejecución del prompt, registrando el número de ejecución secuencial, el ID y versión del prompt, y los valores concretos de cada métrica con sus respectivos insights.
+
+**#️⃣ Ejecución**: `[N]`
+**🔖 Prompt**: `PR-ADR-FTGO-001` — versión `v1.1-mejorada`
+
+| Nombre de la métrica | Valor | Insights |
+|---|---|---|
+| **Número de opciones evaluadas** (`options_count`) | `[X opciones]` | Mínimo requerido: 3 opciones reales y comparables. Indicar si se propusieron menos. |
+| **Balance consecuencias** (`tradeoff_honesty_score`) | `[+X / -Y]` | Razón entre consecuencias positivas vs negativas documentadas. Rango esperado: ≥ 3 positivas y ≥ 3 negativas. |
+| **Citaciones al libro** (`book_citation_count`) | `[N citas]` | Número de referencias explícitas a capítulos o secciones de *Microservices Patterns* (Manning, 2019). Mínimo: 1. |
+| **Impacto en NFRs documentado** (`nfr_impact_rate`) | `[X%]` | % de opciones evaluadas que incluyen mapeo de impacto sobre NFRs del PRD. Debe ser 100%. |
+| **Trazabilidad PRD/FSD** (`source_traceability`) | `[Sí/No]` | ¿El ADR referencia explícitamente restricciones de `docs/PRD.md` o `docs/FSD.md`? |
+| **Decisión justificada con Strangler Fig** (`migration_alignment`) | `[Sí/No]` | ¿La decisión elegida justifica su compatibilidad con el patrón de migración incremental Strangler Fig? |
 ```
 
 ### 1.7 Examples: Inputs/Outputs (Ejemplo de Análisis Comparativo)
@@ -193,9 +211,13 @@ Toda salida válida debe cumplir rigurosamente con estas condiciones:
 ## 7. Instrumentación
 
 - **Herramienta**: OpenTelemetry / Langfuse.
-- **Métricas**:
-  - `tradeoff_honesty_score`: Ratio de consecuencias negativas detalladas contra positivas ($\ge 1.0$, indicando un análisis equilibrado).
-  - `book_citation_count`: Número de citaciones válidas y precisas al libro de Chris Richardson en el ADR ($\ge 1$).
+- **Métricas** (ver tabla `## Métricas` en el artefacto generado):
+  - `options_count`: ≥ 3 opciones arquitectónicas evaluadas.
+  - `tradeoff_honesty_score`: Razón consecuencias negativas/positivas ($\ge 1.0$, indicando un análisis equilibrado).
+  - `book_citation_count`: ≥ 1 citación válida al libro de Chris Richardson.
+  - `nfr_impact_rate`: 100% de opciones con impacto mapeado a NFRs del PRD.
+  - `source_traceability`: ADR referencia restricciones de `docs/PRD.md` o `docs/FSD.md`.
+  - `migration_alignment`: Decisión justificada con el patrón Strangler Fig.
 
 ---
 
@@ -205,6 +227,7 @@ Toda salida válida debe cumplir rigurosamente con estas condiciones:
 |---|---|---|
 | `01/05/2026` | Arquitecto del Lab | Creación de la versión inicial (`v0.1-seed`) con los TODOs de evaluación de opciones y criterios de calidad vacíos. |
 | `24/05/2026` | Antigravity AI & Andres Merida | **v1.0-mejorada / v0**: Reestructuración completa a 9 secciones basada en `PROMPT.md`, resolución de TODOs incluyendo las restricciones técnicas de la migración Strangler Fig, establecimiento de la métrica de evaluación de $\ge 3$ opciones, integración con k6 en `docs/prompts/SKILL.md`, adición de la sección `### 1.7 Examples: Inputs/Outputs` y normalización de la tabla Changelog de versión. |
+| `25/05/2026` | Antigravity AI & Andres Merida | **v1.1-mejorada**: Integración del bloque `## Métricas` en el esqueleto de salida del ADR con 6 métricas de calidad (options_count, tradeoff_honesty_score, book_citation_count, nfr_impact_rate, source_traceability, migration_alignment). Actualización de la sección `## 7. Instrumentación` para referenciar el artefacto generado. Bump de versión a `v1.1-mejorada`. |
 
 ---
 
@@ -213,3 +236,4 @@ Toda salida válida debe cumplir rigurosamente con estas condiciones:
 | Revisor | Fecha | Veredicto | Notas |
 |---------|-------|-----------|-------|
 | Andres Merida | 24/05/2026 | Aprobado | Análisis de trade-offs riguroso, ideal para justificar decisiones ante los comités de arquitectura del laboratorio. |
+| Andres Merida | 25/05/2026 | Aprobado | Integración del bloque `## Métricas` validada. Las 6 métricas cubren rigor del análisis de opciones, honestidad de trade-offs, citaciones académicas y alineación con la migración. |
